@@ -1,0 +1,96 @@
+
+/* Estilos gerais */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #bcbcbc;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.55);
+    width: 100%;
+    color: white;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.logo > img {
+    width: 60px;
+    height: 60px;
+}
+
+h1 {
+    color: #0b245f;
+}
+
+.conversor {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    max-width: 600px;
+    background-color: #dcdcdc;
+    border-radius: 8px;
+    padding: 20px;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+input[type="text"], select, button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.checkbox-container {
+    display: flex;
+    justify-content: space-between; /* Ajusta o espaçamento entre os checkboxes */
+    flex-wrap: wrap; /* Permite que os checkboxes se movam para a linha seguinte se não houver espaço */
+}
+
+.checkbox-container input[type="checkbox"] {
+    margin-right: 5px; /* Espaço entre o checkbox e o rótulo */
+}
+
+
+.bases input[type="checkbox"] {
+    margin-right: 5px; /* Espaço entre o checkbox e o rótulo */
+}
+
+
+button {
+    background-color: #0b245f;
+    color: #FFFFFF;
+    border: none;
+    cursor: pointer;
+}
+
+#resultado {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #D0D3D4;
+    border: 1px solid #63666A;
+    text-align: left;
+    width: 100%;
+    display: none;
+}

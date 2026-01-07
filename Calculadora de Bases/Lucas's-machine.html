@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Bases</title>
+    <link rel="stylesheet" href="./calc_math_machi.css" />
+</head>
+
+<body>
+    <div class="header">
+        <div class="logo" onclick="trocar_LOGO('converter')">
+            <img src="./logo.png" alt="Logo">
+            <h1 title="Calculadora de Bases">Lucas's Machines</h1>
+        </div>
+    </div>
+    <div class="container">
+        <div class="conversor">
+            <h2>Digite um valor:</h2>
+            <div class="bases">
+                <input id="inputValue" type="text" placeholder="Digite o valor">
+                <select id="inputBase1">
+                    <option value="decimal">Decimal</option>
+                    <option value="hexadecimal">Hexadecimal</option>
+                    <option value="octal">Octal</option>
+                    <option value="binario">Binário</option>
+                </select>
+            </div>
+            <h2>Digite outro valor para a operação:</h2>
+            <div class="bases">
+                <input id="inputValue2" type="text" placeholder="Digite o valor">
+                <select id="inputBase2">
+                    <option value="decimal">Decimal</option>
+                    <option value="hexadecimal">Hexadecimal</option>
+                    <option value="octal">Octal</option>
+                    <option value="binario">Binário</option>
+                </select>
+            </div>
+            <h3>Converter para:</h3>
+            <div class="bases">
+                <input type="checkbox" id="convertDecimal"><label for="convertDecimal">Decimal</label>
+                <input type="checkbox" id="convertHexadecimal"><label for="convertHexadecimal">Hexadecimal</label>
+                <input type="checkbox" id="convertOctal"><label for="convertOctal">Octal</label>
+                <input type="checkbox" id="convertBinario"><label for="convertBinario">Binário</label>
+            </div>
+            <div class="buttons">
+                <button onclick="converter()">Converter</button>
+                <button id="botao_somar" onclick="calcular('somar')">Somar</button>
+                <button id="botao_subtrair" onclick="calcular('subtrair')">Subtrair</button>
+                <button id="botao_multiplicar" onclick="calcular('multiplicar')">Multiplicar</button>
+                <button id="botao_dividir" onclick="calcular('dividir')">Dividir</button>
+            </div>
+            <div id="resultado"></div>
+        </div>
+    </div>
+</body>
+</html>
+    <script>
+        // função para converter os valores
+        function converter() {
+            var inputValue = document.getElementById('inputValue').value; // obtém o valor de entrada
+            var inputBase = document.getElementById('inputBase1').value; // obtém a base de entrada
+
+            // valida a entrada de acordo com a base selecionada
+            if (!validarEntrada(inputValue, inputBase)) {
+                alert('Por favor, insira um número válido para a base selecionada.');
+                return;
+            }
+
+            // converte o valor para decimal, com base na base de entrada selecionada
+            var decimalValue;
+            if (inputBase === 'hexadecimal') {
+                decimalValue = parseInt(inputValue, 16);
+            } else if (inputBase === 'octal') {
+                decimalValue = parseInt(inputValue, 8);
+            } else if (inputBase === 'binario') {
+                decimalValue = parseInt(inputValue, 2);
+            } else {
+                decimalValue = parseInt(inputValue, 10);
+            }
+
+            var resultadoHTML = ''; // inicializa a variável para armazenar o html de saída
+
+            // verifica se cada opção de conversão está selecionada e adiciona o resultado ao html de saída
+            if (document.getElementById('convertDecimal').checked) {
+                resultadoHTML += `<p>Decimal: ${decimalValue}</p>`; // adiciona o resultado ao html
+            }
+            if (document.getElementById('convertHexadecimal').checked) {
+                resultadoHTML += `<p>Hexadecimal: ${decimalValue.toString(16).toUpperCase()}</p>`; // converte para hexadecimal e adiciona ao html
+            }
+            if (document.getElementById('convertOctal').checked) {
+                resultadoHTML += `<p>Octal: ${decimalValue.toString(8)}</p>`; // converte para octal e adiciona ao html
+            }
+            if (document.getElementById('convertBinario').checked) {
+                resultadoHTML += `<p>Binário: ${decimalValue.toString(2)}</p>`; // converte para binário e adiciona ao html
+            }
+
+            var resultado = document.getElementById('resultado');
+            resultado.style.display = 'block'; // exibe o elemento de saída
+            resultado.innerHTML = resultadoHTML; // exibe o resultado
+        }
+
+        // função para validar a entrada
+        function validarEntrada(inputValue, inputBase) {
+
+            var validChars = '';
+
+            if (inputBase === 'decimal') {
+                validChars = '0123456789';
+            } else if (inputBase === 'hexadecimal') {
+                validChars = '0123456789ABCDEFabcdef';
+            } else if (inputBase === 'octal') {
+                validChars = '01234567';
+            } else if (inputBase === 'binario') {
+                validChars = '01';
+            }
+            for (var i = 0; i < inputValue.length; i++) {
+                if (validChars.indexOf(inputValue[i]) === -1) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // função para realizar operações
+        function calcular(operacao) {
+            var valor1 = document.getElementById('inputValue').value;
+            var base1 = document.getElementById('inputBase1').value;
+            var valor2 = document.getElementById('inputValue2').value;
+            var base2 = document.getElementById('inputBase2').value;
+
+            if (!validarEntrada(valor1, base1) || !validarEntrada(valor2, base2)) {
+                alert('Por favor, insira números válidos para as bases selecionadas.');
+                return;
+            }
+
+            var decimal1;
+            if (base1 === 'hexadecimal') {
+                decimal1 = parseInt(valor1, 16);
+            } else if (base1 === 'octal') {
+                decimal1 = parseInt(valor1, 8);
+            } else if (base1 === 'binario') {
+                decimal1 = parseInt(valor1, 2);
+            } else {
+                decimal1 = parseInt(valor1, 10);
+            }
+
+            var decimal2;
+            if (base2 === 'hexadecimal') {
+                decimal2 = parseInt(valor2, 16);
+            } else if (base2 === 'octal') {
+                decimal2 = parseInt(valor2, 8);
+            } else if (base2 === 'binario') {
+                decimal2 = parseInt(valor2, 2);
+            } else {
+                decimal2 = parseInt(valor2, 10);
+            }
+
+            var resultado;
+            if (operacao === 'somar') {
+                resultado = decimal1 + decimal2;
+            } else if (operacao === 'subtrair') {
+                resultado = decimal1 - decimal2;
+            } else if (operacao === 'multiplicar') {
+                resultado = decimal1 * decimal2;
+            } else if (operacao === 'dividir') {
+                if (decimal2 === 0) {
+                    alert('Divisão por zero não é permitida.');
+                    return;
+                }
+                resultado = decimal1 / decimal2;
+            } else {
+                alert('Operação inválida.');
+                return;
+            }
+
+            var resultadoHTML= `<p>Resultado em Decimal: ${resultado}</p>`;
+            resultadoHTML += `<p>Resultado em Hexadecimal: ${resultado.toString(16).toUpperCase()}</p>`;
+            resultadoHTML += `<p>Resultado em Octal: ${resultado.toString(8)}</p>`;
+            resultadoHTML += `<p>Resultado em Binário: ${resultado.toString(2)}</p>`;
+
+            var resultado = document.getElementById('resultado');
+            resultado.style.display = 'block'; // exibe o elemento de saída
+            resultado.innerHTML = resultadoHTML; // exibe o resultado
+        }
+
+        // função para converter valores para decimal
+        function converterParaDecimal(inputValue, inputBase) {
+            if (inputBase === 'hexadecimal') {
+                return parseInt(inputValue, 16);
+            } else if (inputBase === 'octal') {
+                return parseInt(inputValue, 8);
+            } else if (inputBase === 'binario') {
+                return parseInt(inputValue, 2);
+            } else {
+                return parseInt(inputValue, 10);
+            }
+        }
+    </script>
